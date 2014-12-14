@@ -20,11 +20,7 @@ var directTemplate = function (ctx) {
           "attrs": {
             "class": "box",
             "id": "box-" + model.number,
-            "style": {
-                top: this.top + 'px',
-                left: this.left + 'px',
-                background: 'rgb(0,0,' + this.color + ')'
-            }
+            "style": model.style
           },
           "type": "tag",
           "children": [
@@ -45,14 +41,14 @@ var directTemplate = function (ctx) {
 };
 
 var Box = Model.extend({
-    props: {
-        number: ['number', true],
-        top: ['number', true, 0],
-        left: ['number', true, 0],
-        color: ['number', true, 0],
-        content: ['number', true, 0],
-        count: ['number', true, 0]
-    },
+    //props: {
+    //    number: ['number', true],
+    //    top: ['number', true, 0],
+    //    left: ['number', true, 0],
+    //    color: ['number', true, 0],
+    //    content: ['number', true, 0],
+    //    count: ['number', true, 0]
+    //},
 
     //derived: {
     //    style: {
@@ -67,29 +63,46 @@ var Box = Model.extend({
     //        }
     //    }
     //},
+    initialize: function (a) {
+        this.count = 0;
+        this.number = a.number;
+        this.tick();
+    },
 
     tick: function () {
         var count = this.count += 1;
-        this.set({
+        var d = {
+            number: this.number,
             top: Math.sin(count / 10) * 10,
             left: Math.cos(count / 10) * 10,
             color: (count) % 255,
-            content: count % 100
-        });
+            content: count % 100,
+        };
+
+        d.style = {
+            top: d.top + 'px',
+            left: d.left + 'px',
+            background: 'rgb(0,0,' + d.color + ')'
+        };
+        this.data = d;
+        return d;
     }
 });
 
 
 var BoxView = View.extend(mixin,{
 
-    //template: _.template('<div class="box-view">' + $('#amp-underscore-template').html() + '</div>'),
+    template: _.template('<div class="box-view">' + $('#amp-underscore-template').html() + '</div>'),
 
-    template: directTemplate,
-    noParse: true,
-    
-    initialize: function() {
-        this.model.bind('change', this.render, this);
+    //template: directTemplate,
+    //noParse: true,
+    props: {
+        unevented: 'any'
     },
+    
+    //initialize: function() {
+    //    //this.model.bind('change', this.render, this);
+    //},
 
     //bindings: {
     //    'model.style': {
@@ -104,9 +117,12 @@ var BoxView = View.extend(mixin,{
     //},
 
     render: function () {
-        this.renderWithTemplate();
+        this.renderWithTemplate({model: this.unevented.tick()});
         return this;
-    }
+    },
+    tick: function () {
+        this.render();
+    },
 });
 
 var boxes;
@@ -115,9 +131,9 @@ var ampInit = function() {
     N = 100;
     boxes = _.map(_.range(N), function(i) {
         var box = new Box({number: i});
-        var view = new BoxView({model: box});
+        var view = new BoxView({unevented: box});
         $('#grid').append(view.render().el);
-        return box;
+        return view;
     });
 };
 

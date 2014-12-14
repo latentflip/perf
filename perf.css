@@ -18,7 +18,7 @@ button {
 }
 
 .box-view {
-  width: 20px; height: 20px;
+  width: 50px; height: 50px;
   float: left;
   position: relative;
   margin: 8px;    
@@ -26,10 +26,14 @@ button {
 
 .box {
   border-radius: 100px;
-  width: 20px; height: 10px;
+  width: 50px; height: 40px;
   padding: 5px 0;
   color: #fff;
   font: 10px/10px Arial;
   text-align: center;
   position: absolute;
 }   
+
+.box input {
+  width: 30px;
+}

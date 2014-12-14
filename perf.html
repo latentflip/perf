@@ -1,5 +1,6 @@
 <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
 <link rel="stylesheet" href="perf.css"/>
+<script src='amp-vdom-mixin.js'></script>
 <script src="http://underscorejs.org/underscore-min.js"></script>
 <script src="http://backbonejs.org/backbone-min.js"></script>
 <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"></script>
@@ -11,6 +12,7 @@
 </p>
 
 <button onclick="runBackbone()">Animate with Backbone</button>
+<button onclick="runBackboneAmpVdom()">Animate with BackboneAmpVdom</button>
 <button onclick="runEmber()">Animate with Ember+HTMLBars</button>
 <button onclick="runReact()">Animate with React</button>
 <button onclick="runRawdog()">Animate with nothing</button>
@@ -22,13 +24,15 @@
 
 <script type="x-template" id="underscore-template">
   <div class="box" id="box-<%= number %>" style="top: <%= top %>px; left: <%= left %>px; background: rgb(0,0,<%= color %>);">
-    <%= content %>       
+    <input type="text"/>
+    <%= content %>
   </div>
 </script>
         
 <script type="x-template" id="amp-underscore-template">
   <div class="box" id="box-<%= model.number %>" style="{model.style}">
-    <%= model.content %>       
+    <input type="text"/>
+    <%= model.content %>
   </div>
 </script>
 
@@ -37,4 +41,5 @@
 </script>
 
 <script src='perf.js'></script>
+<script src='perf-bb-ampvdom.js'></script>
 <script src='amp-perf.bundle.js'></script>

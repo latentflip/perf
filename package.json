@@ -1,0 +1,29 @@
+{
+  "name": "perf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "amp-perf.bundle.js",
+  "dependencies": {
+    "ampersand-virtual-dom-mixin": "^0.1.0",
+    "ampersand-model": "^4.0.3",
+    "ampersand-view": "^7.2.0"
+  },
+  "devDependencies": {
+    "browserify": "^7.0.1"
+  },
+  "scripts": {
+    "start": "open perf.html",
+    "build": "npm run build-mixin",
+    "build-mixin": "echo '//build with npm run build' > ampVdomMixin.js && browserify --standalone ampVdomMixin -r ampersand-virtual-dom-mixin >> ampVdomMixin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/latentflip/perf.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/latentflip/perf/issues"
+  },
+  "homepage": "https://github.com/latentflip/perf"
+}
